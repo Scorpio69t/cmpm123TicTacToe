@@ -65,6 +65,7 @@ void Game::startGame()
 void Game::endTurn()
 {
 	_currentTurnNo++;
+	//unused?
 	std::string startState = stateString();
 	Turn *turn = new Turn;
 	turn->_boardState = stateString();

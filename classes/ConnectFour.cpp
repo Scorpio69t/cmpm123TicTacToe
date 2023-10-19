@@ -95,6 +95,10 @@ bool ConnectFour::actionForEmptyHolder(BitHolder *holder)
     Bit *bit = PieceForPlayer(getCurrentPlayer()->playerNumber());
     if (bit) {
         bit->setPosition(holder->getPosition());
+        auto x = holder->getPosition().x;
+        auto y = holder->getPosition().y;
+        _lastMove = std::to_string(((int)y/100) - 1) + "," + std::to_string(((int)x/100) - 1);
+        std::cout << "action for empty holder curr player: " << getCurrentPlayer()->playerNumber() << std::endl;
         holder->setBit(bit);
         return true;
     }   
@@ -138,18 +142,73 @@ Player* ConnectFour::ownerAt(int index )
 
 Player* ConnectFour::checkForWinner()
 {
+    std::string lastMove = _lastMove;
+    const int y = std::stoi(lastMove.substr(0,1));
+    const int x = std::stoi(lastMove.substr(2,1));
+    int lastPlayer = std::abs(getCurrentPlayer()->playerNumber() - 1);
+    std::cout << "check for Winner curr player: " << lastPlayer << std::endl;
+    std::cout << "x: " << x << " y: " << y << std::endl;
+
+
     //easiest way would be to check if the last move made a connect 4
-    
-    //TODO: we need to check for connect 4 and not tic tac toe here
-    static const int kWinningTriples[8][3] =  { {0,1,2}, {3,4,5}, {6,7,8},  // rows
-                                                {0,3,6}, {1,4,7}, {2,5,8},  // cols
-                                                {0,4,8}, {2,4,6} };         // diagonals
-    for( int i=0; i<8; i++ ) {
-        const int *triple = kWinningTriples[i];
-        Player *p = ownerAt(triple[0]);
-        if( p && p == ownerAt(triple[1]) && p == ownerAt(triple[2]) )
-            return p;
+    //check horizontal
+    int count = 1;
+    for(int i=x + 1; i < (i + 2 < 7 ? i + 2 : 7); i++) {
+        if(_grid[y][i].bit() && _grid[y][i].bit()->getOwner()->playerNumber() == lastPlayer) {
+            count++;
+        } else {
+            break;
+        }
     }
+    for (int i=x - 1; i > (i - 2 >= 0 ? i - 2 : 0); i--) {
+        if(_grid[y][i].bit() && _grid[y][i].bit()->getOwner()->playerNumber() == lastPlayer) {
+            count++;
+        } else {
+            break;
+        }
+    }
+
+    
+    std::cout << "count_horizontal: " << count << std::endl;
+    if(count >= 4) {
+        std::cout << "player " << getCurrentPlayer()->playerNumber() << " wins" << std::endl;
+        return getCurrentPlayer();
+    } else {
+        count = 1;
+    }
+    //check for verticals
+    for(int i=y + 1; i<(i+2 < 5 ? i + 2 : 5); i++) {
+        if(_grid[i][x].bit() && _grid[i][x].bit()->getOwner()->playerNumber() == lastPlayer) {
+            count++;
+        } else {
+            break;
+        }
+    }
+    for(int i=y-1; i<(i-2 >= 0 ? i - 2 : 0); i--) {
+        if(_grid[i][x].bit() && _grid[i][x].bit()->getOwner()->playerNumber() == lastPlayer) {
+            count++;
+        } else {
+            break;
+        }
+    }
+    std::cout << "count_vertical: " << count << std::endl;
+    if(count >= 4) {
+        std::cout << "player " << getCurrentPlayer()->playerNumber() << " wins" << std::endl;
+        return getCurrentPlayer();
+    } else {
+        count = 1;
+    }
+    //check for diagonals
+    //top right = y-1, x+1
+    // check for this 3 times
+    // then check for bottom left = y+1, x-1
+    // check for this 3 times
+
+    //top left = y-1, x-1
+    // check for this 3 times
+    // then check for bottom right = y+1, x+1
+    // check for this 3 times
+    
     return nullptr;
 }
 

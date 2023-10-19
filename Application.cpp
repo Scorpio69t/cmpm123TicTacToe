@@ -1,3 +1,8 @@
+/*
+CHANGES:
+isMouseOver() 
+    changed to only check for the top of the sprite
+*/
 #include "Application.h"
 #include "imgui/imgui.h"
 #include "classes/ConnectFour.h"
