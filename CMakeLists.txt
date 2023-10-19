@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2.0)
-project(tictactoe VERSION 0.1.0 LANGUAGES C CXX)
+project(connectfour VERSION 0.1.0 LANGUAGES C CXX)
 
 # check for macOS
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -28,7 +28,7 @@ else()
     set(IMPL_FILE "imgui/imgui_impl_win32.cpp")
 endif()
 
-add_executable(tictactoe Application.cpp
+add_executable(connectfour Application.cpp
                           imgui/imgui_demo.cpp
                           imgui/imgui_draw.cpp
                           imgui/imgui_tables.cpp
@@ -40,15 +40,15 @@ add_executable(tictactoe Application.cpp
                           classes/Game.cpp
                           classes/Sprite.cpp
                           classes/Square.cpp
-                          classes/TicTacToe.cpp
+                          classes/ConnectFour.cpp
                           ${MAIN_FILE}
                           ${IMPL_FILE}
                 )
 
 if(MACOS)
-    target_link_libraries(tictactoe ${OPENGL_gl_LIBRARY} glfw)
+    target_link_libraries(connectfour ${OPENGL_gl_LIBRARY} glfw)
 else()
-    target_link_libraries(tictactoe ${OPENGL_gl_LIBRARY})
+    target_link_libraries(connectfour ${OPENGL_gl_LIBRARY})
 endif(
 
 )

@@ -1,12 +1,12 @@
 #include "Application.h"
 #include "imgui/imgui.h"
-#include "classes/TicTacToe.h"
+#include "classes/ConnectFour.h"
 
 namespace ClassGame {
         //
         // our global variables
         //
-        TicTacToe *game = nullptr;
+        ConnectFour *game = nullptr;
         bool gameOver = false;
         int gameWinner = -1;
 
@@ -16,7 +16,7 @@ namespace ClassGame {
         //
         void GameStartUp() 
         {
-            game = new TicTacToe();
+            game = new ConnectFour();
             game->setUpBoard();
         }
 

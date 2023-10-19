@@ -61,13 +61,16 @@ public:
         {
             ImGui::SetCursorPos(_location);
             ImVec4 highlight = _highlighted ? ImVec4(1, 1, 0, 1) : ImVec4(0, 0, 0, 0);
+
+            //TODO: figure out how to do 2/3 sides of the border
             ImGui::Image((void*)(intptr_t)_texture, _size, ImVec2(0, 0), ImVec2(1, 1), _color, highlight);
         }
     }
 	// is the mouse over this position?
 	bool isMouseOver(const ImVec2 &mousePos)
-    {
-        return (mousePos.x >= _location.x && mousePos.x <= _location.x + _size.x && mousePos.y >= _location.y && mousePos.y <= _location.y + _size.y);
+    {   
+        //dont need y pos  && mousePos.y >= _location.y && mousePos.y <= _location.y + _size.y
+        return (mousePos.x >= _location.x && mousePos.x <= _location.x + _size.x);
     }
 
     bool LoadTextureFromFile(const char* filename);

@@ -1,7 +1,8 @@
 #include "Square.h"
 
-void Square::initHolder(const ImVec2 &position, const char *spriteName, const int column, const int row)
+void Square::initHolder(const ImVec2 &position, const char *spriteName, const int column, const int row, const bool isTop, const bool isBottom)
 {
+    _isTop = isTop;
     _column = column;
     _row = row;
     int odd = (column + row) % 2;
@@ -10,5 +11,6 @@ void Square::initHolder(const ImVec2 &position, const char *spriteName, const in
     {
         color = ImVec4(0.5,0.5,0.75,1);
     }
+
     BitHolder::initHolder(position, color, spriteName);
 }
