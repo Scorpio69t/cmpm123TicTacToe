@@ -203,11 +203,60 @@ Player* ConnectFour::checkForWinner()
     // check for this 3 times
     // then check for bottom left = y+1, x-1
     // check for this 3 times
-
+    for(int i=1; i<4; i++) {
+        if(y-i >= 0 && x+i < 7) {
+            if(_grid[y-i][x+i].bit() && _grid[y-i][x+i].bit()->getOwner()->playerNumber() == lastPlayer) {
+                count++;
+            } else {
+                break;
+            }
+        }
+    }
+    for(int i=1; i<4; i++) {
+        if(y+i < 6 && x-i >= 0) {
+            if(_grid[y+i][x-i].bit() && _grid[y+i][x-i].bit()->getOwner()->playerNumber() == lastPlayer) {
+                count++;
+            } else {
+                break;
+            }
+        }
+    }
+    std::cout << "count_diagonal: " << count << std::endl;
+    if(count >= 4) {
+        std::cout << "player " << getCurrentPlayer()->playerNumber() << " wins" << std::endl;
+        return getCurrentPlayer();
+    } else {
+        count = 1;
+    }
     //top left = y-1, x-1
     // check for this 3 times
     // then check for bottom right = y+1, x+1
     // check for this 3 times
+    for(int i=1; i<4; i++) {
+        if(y-i >= 0 && x-i >= 0) {
+            if(_grid[y-i][x-i].bit() && _grid[y-i][x-i].bit()->getOwner()->playerNumber() == lastPlayer) {
+                count++;
+            } else {
+                break;
+            }
+        }
+    }
+    for(int i=1; i<4; i++) {
+        if(y+i < 6 && x+i < 7) {
+            if(_grid[y+i][x+i].bit() && _grid[y+i][x+i].bit()->getOwner()->playerNumber() == lastPlayer) {
+                count++;
+            } else {
+                break;
+            }
+        }
+    }
+    std::cout << "count_diagonal: " << count << std::endl;
+    if(count >= 4) {
+        std::cout << "player " << getCurrentPlayer()->playerNumber() << " wins" << std::endl;
+        return getCurrentPlayer();
+    } else {
+        count = 1;
+    }
     
     return nullptr;
 }
